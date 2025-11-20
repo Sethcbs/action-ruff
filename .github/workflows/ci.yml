@@ -14,3 +14,21 @@ jobs:
       - uses: ./
         with:
           src: tests/foobar.py
+  
+  clean-code-should-pass:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./
+        with:
+          src: tests/test_should_pass.py
+
+  bad-code-should-fail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./
+        with:
+          src: tests/test_should_fail.py
