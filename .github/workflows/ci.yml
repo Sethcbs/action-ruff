@@ -25,10 +25,23 @@ jobs:
           src: tests/test_should_pass.py
 
   bad-code-should-fail:
+    name: Bad code (should FAIL)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-
-      - uses: ./
+      - name: Run action exception failure
+        id: ruff_run
+        continue-on-error: true
+        uses: ./
         with:
           src: tests/test_should_fail.py
+          args: ""
+
+      - name: Assert failure happened
+        run: |
+          if [ "${{ steps.ruff_run.outcome }}" == "failure" ]; then
+            echo "Correct: Ruff failed as expected."
+          else
+            echo "ERROR: Ruff DID NOT fail on bad code."
+            exit 1
+          fi
