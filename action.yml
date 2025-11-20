@@ -9,7 +9,7 @@ inputs:
   src:
     descriptions: "Directories or files to check"
     default: "."
-
+      
 runs:
   using: composite
   steps:
